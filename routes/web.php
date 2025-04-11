@@ -1,8 +1,6 @@
 <?php
 
+use App\Http\Controllers\CsvController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('inicio');
-});
-
+Route::get('/', [CsvController::class, 'index'])->name('inicio');
