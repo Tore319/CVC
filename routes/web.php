@@ -9,8 +9,7 @@ Route::get('/', function () {
 })->name('inicio');
 
 Route::get('/gestion', [CsvController::class, 'index'])->name('gestion');
-
-Route::get('/gestion', [CsvController::class, 'create'])->name('subir');
+Route::get('/subir', [CsvController::class, 'create'])->name('subir');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
