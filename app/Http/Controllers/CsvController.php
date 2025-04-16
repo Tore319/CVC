@@ -13,7 +13,7 @@ class CsvController extends Controller
     public function index()
     {
         $csvs = Csv::get();
-        return view('inicio')->with(compact('csvs'));
+        return view('csv.index')->with(compact('csvs'));
     }
 
     /**
@@ -21,7 +21,7 @@ class CsvController extends Controller
      */
     public function create()
     {
-        //
+        return view('csv.create');
     }
 
     /**

@@ -4,11 +4,17 @@ use App\Http\Controllers\CsvController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CsvController::class, 'index'])->name('inicio');
+Route::get('/', function () {
+    return view('inicio');
+})->name('inicio');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/gestion', [CsvController::class, 'index'])->name('gestion');
+
+Route::get('/gestion', [CsvController::class, 'create'])->name('subir');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

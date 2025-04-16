@@ -8,6 +8,38 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ route('inicio') }}">CSV</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    @if (auth()->guest())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        </li>
+                    @endif
+                    @if (auth()->check())
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-link">Logout</button>
+                        </form>
+                        @if (auth()->user()->rol == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('subir') }}">Subir</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Gestión</a>
+                            </li>
+                        @endif
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
     
     @yield('contenido')
 

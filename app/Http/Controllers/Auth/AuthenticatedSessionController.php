@@ -28,6 +28,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if($request->user()->rol == 'admin') {
+            return redirect()->intended(route('gestion', absolute: false));
+        }
+
         return redirect()->intended(route('inicio', absolute: false));
     }
 
