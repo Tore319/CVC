@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Csv;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CsvController extends Controller
 {
@@ -12,8 +14,14 @@ class CsvController extends Controller
      */
     public function index()
     {
-        $csvs = Csv::get();
-        return view('csv.index')->with(compact('csvs'));
+        $usuario = Auth::user();
+
+        if(!$usuario || $usuario->rol !== 'admin') {
+            return redirect()->route('inicio');
+        }
+
+        $csvs = Csv::orderBy('created_at', 'DESC')->paginate(1);
+        return view('csv.index', compact('csvs'));
     }
 
     /**
@@ -21,6 +29,12 @@ class CsvController extends Controller
      */
     public function create()
     {
+        $usuario = Auth::user();
+
+        if(!$usuario || $usuario->rol !== 'admin') {
+            return redirect()->route('inicio');
+        }
+
         return view('csv.create');
     }
 
@@ -29,7 +43,26 @@ class CsvController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $csv = new Csv();
+        $usuario = Auth::user();
+
+        if(!$usuario || $usuario->rol !== 'admin') {
+            return redirect()->route('inicio');
+        }
+
+        $csv->DNI = $request->get('dni');
+        $csv->nombre = $request->get('nombre');
+        $csv->apellidos = $request->get('apellidos');
+        $csv->correo = $request->get('correo');
+        if ($request->hasFile('archivo')) {
+            $csv->archivo = $request->file('archivo')->store('csv', 'public');
+        }
+        $csv->hash = 'kdsbhglkg';
+        $csv->csv = 'dnbhgjkdwhsngjkbrwegkljsab';
+
+        if ($csv->save()) {
+            return redirect()->route('inicio');
+        }
     }
 
     /**

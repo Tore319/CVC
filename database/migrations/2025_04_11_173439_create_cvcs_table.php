@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('apellidos');
             $table->string('correo')->unique();
             $table->string('archivo');
-            $table->string('tipo_archivo');
             $table->timestamps();
         });
     }
