@@ -29,10 +29,10 @@
                         </form>
                         @if (auth()->user()->rol == 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('subir') }}">Subir</a>
+                                <a class="nav-link" href="{{ route('csv.create') }}">Subir</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Gestión</a>
+                                <a class="nav-link" href="{{ route('csv.index') }}">Gestión</a>
                             </li>
                         @endif
                     @endif
